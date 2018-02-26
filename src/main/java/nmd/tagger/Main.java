@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws InvalidDataException, IOException, UnsupportedTagException {
+    public static void main(String[] args) throws InvalidDataException, IOException, UnsupportedTagException, NotSupportedException {
         Mp3File mp3file = new Mp3File("D:\\R\\rhye--the-fall.mp3");
         System.out.println("Length of this mp3 is: " + mp3file.getLengthInSeconds() + " seconds");
         System.out.println("Bitrate: " + mp3file.getBitrate() + " kbps " + (mp3file.isVbr() ? "(VBR)" : "(CBR)"));
@@ -54,6 +54,19 @@ public class Main {
             }
         }
 
+        if (mp3file.hasId3v1Tag()) {
+            ID3v1 id3v1Tag = mp3file.getId3v1Tag();
+            id3v1Tag.setArtist("artist01");
+            id3v1Tag.setTitle("title01");
+        }
+
+        if (mp3file.hasId3v2Tag()) {
+            ID3v2 id3v2Tag = mp3file.getId3v2Tag();
+            id3v2Tag.setArtist("artist02");
+            id3v2Tag.setTitle("title02");
+        }
+
+        mp3file.save("C:\\igu\\temp\\rhye--the-fall.mp3");
     }
 
 }
