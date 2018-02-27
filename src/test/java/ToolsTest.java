@@ -1,4 +1,4 @@
-import nmd.tagger.NameParser;
+import nmd.tagger.Tools;
 import nmd.tagger.TrackInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,13 +10,13 @@ import java.util.Collection;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(value = Parameterized.class)
-public class NameParserTest {
+public class ToolsTest {
 
     private String name;
     private String artist;
     private String title;
 
-    public NameParserTest(String name, String artist, String title) {
+    public ToolsTest(String name, String artist, String title) {
         this.name = name;
         this.artist = artist;
         this.title = title;
@@ -35,7 +35,7 @@ public class NameParserTest {
 
     @Test
     public void test() {
-        assertEquals(NameParser.parse(name), new TrackInfo(artist, title));
+        assertEquals(Tools.parse(name), new TrackInfo(artist, title));
     }
 
 }

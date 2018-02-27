@@ -4,7 +4,9 @@ import com.mpatric.mp3agic.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class Main {
 
@@ -71,6 +73,10 @@ public class Main {
         mp3file.save("C:\\igu\\temp\\rhye--the-fall.mp3");
 
         Files.walk(Paths.get("D:\\")).forEach(System.out::println);
+
+        List<Path> pathList = Tools.scan("D:\\");
+
+        System.out.println(pathList);
     }
 
 }
