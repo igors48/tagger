@@ -13,7 +13,9 @@ public class Tools {
     private static final int DIVIDER_LENGTH = "--".length();
     private static final String MP3_EXTENSION = ".mp3";
 
-    public static TrackInfo parse(String name) {
+    public static TrackInfo parse(String fileName) {
+        String name = getNameWithoutExtension(fileName);
+
         String artist = "";
         String title = "";
 
@@ -27,6 +29,12 @@ public class Tools {
         return new TrackInfo(artist, title);
     }
 
+    private static String getNameWithoutExtension(String fileName) {
+        int index = fileName.toLowerCase().indexOf(MP3_EXTENSION);
+
+        return index == -1 ? fileName : fileName.substring(0, index);
+    }
+
     private static String restoreSpaces(String source) {
         return source.replace("-", " ");
     }
@@ -38,6 +46,9 @@ public class Tools {
     }
 
     public static Track read(Path path, TrackFileActions trackFileActions) {
+        String fileName = path.getFileName().toString();
+        TrackInfo trackInfo = parse(fileName);
+
         return null;
     }
 
