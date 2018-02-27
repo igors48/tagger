@@ -1,19 +1,19 @@
 package nmd.tagger;
 
-import java.io.File;
+import java.nio.file.Path;
 
 public class Track {
 
-    private final File file;
+    private final Path path;
 
     private TrackInfo info;
 
-    public Track(File file) {
-        this.file = file;
+    public Track(Path path) {
+        this.path = path;
     }
 
-    public File getFile() {
-        return file;
+    public Path getPath() {
+        return path;
     }
 
     public TrackInfo getInfo() {

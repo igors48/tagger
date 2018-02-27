@@ -11,6 +11,7 @@ public class Tools {
 
     private static final String DIVIDER = "--";
     private static final int DIVIDER_LENGTH = "--".length();
+    private static final String MP3_EXTENSION = ".mp3";
 
     public static TrackInfo parse(String name) {
         String artist = "";
@@ -32,8 +33,12 @@ public class Tools {
 
     public static List<Path> scan(String directory) throws IOException {
         return Files.walk(Paths.get(directory))
-                .filter(p -> p.toString().toLowerCase().endsWith(".mp3"))
+                .filter(p -> p.toString().toLowerCase().endsWith(MP3_EXTENSION))
                 .collect(Collectors.toList());
+    }
+
+    public static Track read(Path path, TrackFileActions trackFileActions) {
+        return null;
     }
 
 }
