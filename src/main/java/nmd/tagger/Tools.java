@@ -10,8 +10,18 @@ import java.util.stream.Collectors;
 public class Tools {
 
     private static final String DIVIDER = "--";
-    private static final int DIVIDER_LENGTH = "--".length();
+    private static final int DIVIDER_LENGTH = DIVIDER.length();
     private static final String MP3_EXTENSION = ".mp3";
+
+    public static void validateTrack(Track track) {
+
+    }
+
+    public static List<Track> readTracks(List<Path> tracks) {
+        return tracks.stream()
+                .map(Tools::read)
+                .collect(Collectors.toList());
+    }
 
     public static TrackInfo parse(String fileName) {
         String name = getNameWithoutExtension(fileName);
@@ -29,6 +39,19 @@ public class Tools {
         return new TrackInfo(artist, title);
     }
 
+    public static List<Path> scan(String directory) throws IOException {
+        return Files.walk(Paths.get(directory))
+                .filter(p -> p.toString().toLowerCase().endsWith(MP3_EXTENSION))
+                .collect(Collectors.toList());
+    }
+
+    public static Track read(Path path) {
+        String fileName = path.getFileName().toString();
+        TrackInfo trackInfo = parse(fileName);
+
+        return new Track(path, trackInfo);
+    }
+
     private static String getNameWithoutExtension(String fileName) {
         int index = fileName.toLowerCase().indexOf(MP3_EXTENSION);
 
@@ -37,19 +60,6 @@ public class Tools {
 
     private static String restoreSpaces(String source) {
         return source.replace("-", " ");
-    }
-
-    public static List<Path> scan(String directory) throws IOException {
-        return Files.walk(Paths.get(directory))
-                .filter(p -> p.toString().toLowerCase().endsWith(MP3_EXTENSION))
-                .collect(Collectors.toList());
-    }
-
-    public static Track read(Path path, TrackFileActions trackFileActions) {
-        String fileName = path.getFileName().toString();
-        TrackInfo trackInfo = parse(fileName);
-
-        return null;
     }
 
 }

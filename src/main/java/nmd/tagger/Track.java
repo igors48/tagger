@@ -5,23 +5,19 @@ import java.nio.file.Path;
 public class Track {
 
     private final Path path;
+    private final TrackInfo trackInfo;
 
-    private TrackInfo info;
-
-    public Track(Path path) {
+    Track(Path path, TrackInfo trackInfo) {
         this.path = path;
+        this.trackInfo = trackInfo;
     }
 
     public Path getPath() {
         return path;
     }
 
-    public TrackInfo getInfo() {
-        return info;
-    }
-
-    public void setInfo(TrackInfo info) {
-        this.info = info;
+    public TrackInfo getTrackInfo() {
+        return trackInfo;
     }
 
 }
