@@ -1,4 +1,4 @@
-package nmd.tagger;
+package nmd.tagger.tracks;
 
 import java.nio.file.Path;
 
@@ -13,7 +13,7 @@ public class Track {
 
     private boolean processed;
 
-    Track(Path path, TrackInfo trackInfo) {
+    public Track(Path path, TrackInfo trackInfo) {
         this.path = path;
         this.trackInfo = trackInfo;
     }
@@ -56,6 +56,10 @@ public class Track {
 
     public void setProcessed(boolean processed) {
         this.processed = processed;
+    }
+
+    public boolean isValid() {
+        return readable && artistDefined && titleDefined;
     }
 
 }

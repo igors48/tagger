@@ -2,7 +2,10 @@ package nmd.tagger;
 
 import nmd.tagger.operations.Mp3Operations;
 import nmd.tagger.operations.Mp3OperationsFactory;
+import nmd.tagger.tracks.Track;
+import nmd.tagger.tracks.TrackInfo;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,13 +33,46 @@ public class Tools {
             final String artist = trackInfo.getArtist();
             final String title = trackInfo.getTitle();
 
-            operations.setArtistAndTitle(artist, title);
+            updateArtistAndTitle(artist, title, operations);
 
-            operations.store();
+            final String tempFileName = track.getPath().getParent().toString() + "\\temp.mp3";
+
+            operations.store(tempFileName);
+
+            File dest = path.toFile();
+            File source = new File(tempFileName);
+
+            dest.delete();
+            source.renameTo(dest);
+
             track.setProcessed(true);
         } catch (Exception e) {
             track.setProcessed(false);
         }
+    }
+
+    public static void updateArtistAndTitle(String artist, String title, Mp3Operations operations) {
+
+        if (!operations.hasId3v1Tag()) {
+            operations.createId3v1Tag();
+        }
+
+        if (!operations.hasId3v2Tag()) {
+            operations.createId3v2Tag();
+        }
+
+        operations.setArtistToId3v1Tag(artist);
+        operations.setArtistToId3v2Tag(artist);
+        operations.setAlbumArtistToId3v2Tag(artist);
+
+        operations.setTitleToId3v1Tag(title);
+        operations.setTitleToId3v2Tag(title);
+
+        operations.setAlbumToId3v1Tag(artist + " tracks");
+        operations.setAlbumToId3v2Tag(artist + " tracks");
+
+        operations.setTrackToId3v1Tag(null);
+        operations.setTrackToId3v2Tag(null);
     }
 
     public static void validate(List<Track> tracks, Mp3OperationsFactory factory) {

@@ -1,5 +1,5 @@
 import nmd.tagger.Tools;
-import nmd.tagger.TrackInfo;
+import nmd.tagger.tracks.TrackInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

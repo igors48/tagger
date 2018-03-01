@@ -54,12 +54,43 @@ public class Mp3agicOperations implements Mp3Operations {
     public void setArtistToId3v2Tag(String artist) {
         ID3v2 id3v2Tag = mp3File.getId3v2Tag();
         id3v2Tag.setArtist(artist);
+        id3v2Tag.setAlbumArtist(artist);
+    }
+
+    @Override
+    public void setAlbumArtistToId3v2Tag(String artist) {
+        ID3v2 id3v2Tag = mp3File.getId3v2Tag();
+        id3v2Tag.setAlbumArtist(artist);
     }
 
     @Override
     public void setTitleToId3v2Tag(String title) {
         ID3v2 id3v2Tag = mp3File.getId3v2Tag();
-        id3v2Tag.setArtist(title);
+        id3v2Tag.setTitle(title);
+    }
+
+    @Override
+    public void setAlbumToId3v1Tag(String album) {
+        ID3v1 id3v1Tag = mp3File.getId3v1Tag();
+        id3v1Tag.setAlbum(album);
+    }
+
+    @Override
+    public void setAlbumToId3v2Tag(String album) {
+        ID3v2 id3v2Tag = mp3File.getId3v2Tag();
+        id3v2Tag.setAlbum(album);
+    }
+
+    @Override
+    public void setTrackToId3v1Tag(String track) {
+        ID3v1 id3v1Tag = mp3File.getId3v1Tag();
+        id3v1Tag.setTrack(track);
+    }
+
+    @Override
+    public void setTrackToId3v2Tag(String track) {
+        ID3v2 id3v2Tag = mp3File.getId3v2Tag();
+        id3v2Tag.setTrack(track);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package nmd.tagger;
+package nmd.tagger.tracks;
 
 public class TrackInfo {
 
