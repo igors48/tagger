@@ -11,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class Tools {
@@ -19,11 +21,17 @@ public class Tools {
     private static final int DIVIDER_LENGTH = DIVIDER.length();
     private static final String MP3_EXTENSION = ".mp3";
 
-    public static void update(List<Track> tracks, Mp3OperationsFactory factory) {
+    static Set<String> createArtistList(List<Track> tracks) {
+        return tracks.stream()
+                .map(track -> track.getTrackInfo().getArtist())
+                .collect(Collectors.toCollection(TreeSet::new));
+    }
+
+    static void update(List<Track> tracks, Mp3OperationsFactory factory) {
         tracks.forEach(track -> updateTrack(track, factory));
     }
 
-    public static void updateTrack(Track track, Mp3OperationsFactory factory) {
+    private static void updateTrack(Track track, Mp3OperationsFactory factory) {
 
         try {
             final Path path = track.getPath();
@@ -51,7 +59,7 @@ public class Tools {
         }
     }
 
-    public static void updateArtistAndTitle(String artist, String title, Mp3Operations operations) {
+    private static void updateArtistAndTitle(String artist, String title, Mp3Operations operations) {
 
         if (!operations.hasId3v1Tag()) {
             operations.createId3v1Tag();
@@ -75,11 +83,11 @@ public class Tools {
         operations.setTrackToId3v2Tag(null);
     }
 
-    public static void validate(List<Track> tracks, Mp3OperationsFactory factory) {
+    static void validate(List<Track> tracks, Mp3OperationsFactory factory) {
         tracks.forEach(track -> validateTrack(track, factory));
     }
 
-    public static void validateTrack(Track track, Mp3OperationsFactory factory) {
+    private static void validateTrack(Track track, Mp3OperationsFactory factory) {
         final TrackInfo trackInfo = track.getTrackInfo();
 
         boolean artistDefined = isNotEmpty(trackInfo.getArtist());
@@ -106,7 +114,7 @@ public class Tools {
         return !(artist == null || artist.isEmpty());
     }
 
-    public static List<Track> readTracks(List<Path> tracks) {
+    static List<Track> readTracks(List<Path> tracks) {
         return tracks.stream()
                 .map(Tools::read)
                 .collect(Collectors.toList());
@@ -128,13 +136,13 @@ public class Tools {
         return new TrackInfo(artist, title);
     }
 
-    public static List<Path> scan(String directory) throws IOException {
+    static List<Path> scan(String directory) throws IOException {
         return Files.walk(Paths.get(directory))
                 .filter(p -> p.toString().toLowerCase().endsWith(MP3_EXTENSION))
                 .collect(Collectors.toList());
     }
 
-    public static Track read(Path path) {
+    private static Track read(Path path) {
         final String fileName = path.getFileName().toString();
         final TrackInfo trackInfo = parse(fileName);
 

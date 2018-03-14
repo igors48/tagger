@@ -7,19 +7,17 @@ import nmd.tagger.tracks.Track;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Set;
 
-/**
- * Created by igu on 01-Mar-18.
- */
 public class Application {
 
-    private static final String DIRECTORY = "D:\\T\\";
+    private static final String DIRECTORY = "D:\\";
 
     public static void main(String[] args) throws IOException {
-        List<Path> files = Tools.scan(DIRECTORY);
-        List<Track> tracks = Tools.readTracks(files);
+        final List<Path> files = Tools.scan(DIRECTORY);
+        final List<Track> tracks = Tools.readTracks(files);
 
-        Mp3OperationsFactory operationsFactory = new Mp3agicOperationsFactory();
+        final Mp3OperationsFactory operationsFactory = new Mp3agicOperationsFactory();
         Tools.validate(tracks, operationsFactory);
 
         boolean allFilesAreValid = true;
@@ -33,6 +31,8 @@ public class Application {
         }
 
         if (allFilesAreValid) {
+            final Set<String> artists = Tools.createArtistList(tracks);
+            artists.forEach(System.out::println);
             Tools.update(tracks, operationsFactory);
         }
 
