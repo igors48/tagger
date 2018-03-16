@@ -8,6 +8,7 @@ import nmd.tagger.tracks.Track;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -28,15 +29,32 @@ public class Main implements Runnable {
     public void run() {
 
         try {
-            state.setStep(Step.SCAN);
+            state.scan();
             final List<Path> files = Tools.scan(DIRECTORY);
 
-            state.setStep(Step.READ);
-            final List<Track> tracks = Tools.readTracks(files);
+            state.scanCompleted(files.size());
 
-            state.setStep(Step.VERIFY);
+            final List<Track> tracks = new ArrayList<>();
+
+            int count = 0;
+
+            for (Path file : files) {
+                state.read(count++);
+
+                final Track track = Tools.read(file);
+
+                tracks.add(track);
+            }
+
             final Mp3OperationsFactory operationsFactory = new Mp3agicOperationsFactory();
-            Tools.validate(tracks, operationsFactory);
+
+            count = 0;
+
+            for (Track track : tracks) {
+                state.verify(count++);
+
+                Tools.validateTrack(track, operationsFactory);
+            }
 
             boolean allFilesAreValid = true;
 
@@ -56,9 +74,10 @@ public class Main implements Runnable {
             }
 
             System.out.println(tracks);
-            state.setStep(Step.END);
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            state.setStep(Step.END);
         }
     }
 

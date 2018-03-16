@@ -1,7 +1,6 @@
 package nmd.tagger;
 
 import nmd.tagger.application.State;
-import nmd.tagger.application.Step;
 import nmd.tagger.application.console.Renderer;
 
 /**
@@ -19,13 +18,12 @@ public class Console implements Runnable {
     public void run() {
 
         try {
-            Step step;
+            boolean notEnd;
 
             do {
-                step = state.getStep();
-                Renderer.render(state);
-                Thread.sleep(1000);
-            } while (!step.equals(Step.END));
+                notEnd = Renderer.render(state);
+                Thread.sleep(10);
+            } while (notEnd);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
