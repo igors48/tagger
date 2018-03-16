@@ -18,12 +18,10 @@ public class Console implements Runnable {
     public void run() {
 
         try {
-            boolean notEnd;
 
             do {
-                notEnd = Renderer.render(state);
                 Thread.sleep(10);
-            } while (notEnd);
+            } while (Renderer.render(state));
 
         } catch (InterruptedException e) {
             e.printStackTrace();
