@@ -17,11 +17,11 @@ import java.util.Set;
  */
 public class Main implements Runnable {
 
-    private static final String DIRECTORY = "D:\\";
-
+    private final Parameters parameters;
     private final State state;
 
-    public Main(State state) {
+    Main(Parameters parameters, State state) {
+        this.parameters = parameters;
         this.state = state;
     }
 
@@ -30,7 +30,7 @@ public class Main implements Runnable {
 
         try {
             state.scan();
-            final List<Path> files = Tools.scan(DIRECTORY);
+            final List<Path> files = Tools.scan(parameters.getPath());
 
             state.scanCompleted(files.size());
 
