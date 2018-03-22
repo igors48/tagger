@@ -1,4 +1,4 @@
-import nmd.tagger.Tools;
+import nmd.tagger.application.Tools;
 import nmd.tagger.tracks.TrackInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;

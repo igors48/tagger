@@ -1,7 +1,7 @@
-package nmd.tagger;
+package nmd.tagger.application;
 
-import nmd.tagger.application.State;
-import nmd.tagger.application.Step;
+import nmd.tagger.application.state.State;
+import nmd.tagger.application.state.Step;
 import nmd.tagger.operations.Mp3OperationsFactory;
 import nmd.tagger.operations.mp3agic.Mp3agicOperationsFactory;
 import nmd.tagger.tracks.Track;
@@ -20,7 +20,7 @@ public class Main implements Runnable {
     private final Parameters parameters;
     private final State state;
 
-    Main(Parameters parameters, State state) {
+    public Main(Parameters parameters, State state) {
         this.parameters = parameters;
         this.state = state;
     }

@@ -1,7 +1,7 @@
 package nmd.tagger.application.console;
 
-import nmd.tagger.application.State;
-import nmd.tagger.application.Step;
+import nmd.tagger.application.state.State;
+import nmd.tagger.application.state.Step;
 
 /**
  * Created by igu on 16-Mar-18.

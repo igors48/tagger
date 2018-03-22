@@ -1,4 +1,4 @@
-package nmd.tagger;
+package nmd.tagger.application;
 
 import nmd.tagger.operations.Mp3Operations;
 import nmd.tagger.operations.Mp3OperationsFactory;

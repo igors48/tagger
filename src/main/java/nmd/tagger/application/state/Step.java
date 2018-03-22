@@ -1,4 +1,4 @@
-package nmd.tagger.application;
+package nmd.tagger.application.state;
 
 /**
  * Created by igu on 16-Mar-18.

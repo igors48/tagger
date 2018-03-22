@@ -1,7 +1,10 @@
 package nmd.tagger;
 
-import nmd.tagger.application.State;
-import nmd.tagger.application.Step;
+import nmd.tagger.application.Main;
+import nmd.tagger.application.Parameters;
+import nmd.tagger.application.console.Console;
+import nmd.tagger.application.state.State;
+import nmd.tagger.application.state.Step;
 
 public class Application {
 

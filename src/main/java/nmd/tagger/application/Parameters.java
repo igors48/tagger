@@ -1,10 +1,10 @@
-package nmd.tagger;
+package nmd.tagger.application;
 
 public class Parameters {
 
     private final String path;
 
-    Parameters(String path) {
+    public Parameters(String path) {
         this.path = path;
     }
 
