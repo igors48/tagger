@@ -8,5 +8,6 @@ public enum Step {
     READ,
     VERIFY,
     PROCESS,
-    END
+    END,
+    ERROR
 }

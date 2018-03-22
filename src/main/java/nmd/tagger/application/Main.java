@@ -1,5 +1,7 @@
 package nmd.tagger.application;
 
+import nmd.tagger.application.command.CommandFactory;
+import nmd.tagger.application.command.ScanForMp3Files;
 import nmd.tagger.application.state.State;
 import nmd.tagger.application.state.Step;
 import nmd.tagger.operations.Mp3OperationsFactory;
@@ -18,10 +20,12 @@ import java.util.Set;
 public class Main implements Runnable {
 
     private final Parameters parameters;
+    private final CommandFactory commandFactory;
     private final State state;
 
-    public Main(Parameters parameters, State state) {
+    public Main(Parameters parameters, CommandFactory commandFactory, State state) {
         this.parameters = parameters;
+        this.commandFactory = commandFactory;
         this.state = state;
     }
 
@@ -29,16 +33,18 @@ public class Main implements Runnable {
     public void run() {
 
         try {
-            state.scan();
-            final List<Path> files = Tools.scan(parameters.getPath());
+            ScanForMp3Files scanForMp3Files = commandFactory.scanForMp3Files(parameters.getPath());
+            scanForMp3Files.execute();
 
-            state.scanCompleted(files.size());
+            if (state.getStep().equals(Step.ERROR)) {
+                return;
+            }
 
             final List<Track> tracks = new ArrayList<>();
 
             int count = 0;
 
-            for (Path file : files) {
+            for (Path file : state.getFiles()) {
                 state.read(count++);
 
                 final Track track = Tools.read(file);
@@ -74,7 +80,7 @@ public class Main implements Runnable {
             }
 
             System.out.println(tracks);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             state.setStep(Step.END);
