@@ -83,11 +83,7 @@ public class Tools {
         operations.setTrackToId3v2Tag(null);
     }
 
-    static void validate(List<Track> tracks, Mp3OperationsFactory factory) {
-        tracks.forEach(track -> validateTrack(track, factory));
-    }
-
-    private static void validateTrack(Track track, Mp3OperationsFactory factory) {
+    static void validateTrack(Track track, Mp3OperationsFactory factory) {
         final TrackInfo trackInfo = track.getTrackInfo();
 
         boolean artistDefined = isNotEmpty(trackInfo.getArtist());
@@ -142,7 +138,7 @@ public class Tools {
                 .collect(Collectors.toList());
     }
 
-    private static Track read(Path path) {
+    static Track read(Path path) {
         final String fileName = path.getFileName().toString();
         final TrackInfo trackInfo = parse(fileName);
 
