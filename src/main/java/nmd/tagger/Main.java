@@ -70,7 +70,7 @@ public class Main implements Runnable {
                 state.setStep(Step.PROCESS);
                 final Set<String> artists = Tools.createArtistList(tracks);
                 artists.forEach(System.out::println);
-                //Tools.update(tracks, operationsFactory);
+                Tools.update(tracks, operationsFactory);
             }
 
             System.out.println(tracks);
