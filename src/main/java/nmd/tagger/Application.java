@@ -12,7 +12,7 @@ import nmd.tagger.operations.path.PathOperations;
 public class Application {
 
     public static void main(String[] args) throws InterruptedException {
-        final Parameters parameters = new Parameters("D:\\");
+        final Parameters parameters = new Parameters("C:\\Igor\\temp");
         final State state = new State();
         final DirectoryOperations directoryOperations = new PathOperations();
         final CommandFactory commandFactory = new CommandFactory(directoryOperations, state);

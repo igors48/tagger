@@ -45,6 +45,8 @@ public class Tools {
 
             final String tempFileName = track.getPath().getParent().toString() + "\\temp.mp3";
 
+            operations.replaceFrontCover();
+
             operations.store(tempFileName);
 
             File dest = path.toFile();

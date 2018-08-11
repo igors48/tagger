@@ -4,6 +4,10 @@ import com.mpatric.mp3agic.*;
 import nmd.tagger.operations.Mp3Operations;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import static com.mpatric.mp3agic.AbstractID3v2Tag.PICTURETYPE_FRONTCOVER;
 
 /**
  * Created by igu on 28-Feb-18.
@@ -96,6 +100,17 @@ public class Mp3agicOperations implements Mp3Operations {
     @Override
     public void store(String fileName) throws IOException, NotSupportedException {
         mp3File.save(fileName);
+    }
+
+    @Override
+    public void replaceFrontCover() throws IOException {
+        String filePath = "C:\\Igor\\folder.jpg";
+        byte[] bytes = Files.readAllBytes(Paths.get(filePath));
+
+        ID3v2 id3v2Tag = mp3File.getId3v2Tag();
+        id3v2Tag.clearAlbumImage();
+
+        id3v2Tag.setAlbumImage(bytes, "image/jpeg", PICTURETYPE_FRONTCOVER, null);
     }
 
 }
