@@ -8,15 +8,17 @@ public final class CommandLineParser {
 
     public static Parameters parse(String[] arguments) throws ApplicationError {
 
-        if (arguments.length == 0) {
-            throw new ApplicationError(ErrorCode.NO_ARGUMENTS);
+        switch (arguments.length) {
+            case 0:
+                throw new ApplicationError(ErrorCode.NO_ARGUMENTS);
+            case 1:
+                return new Parameters(arguments[0], "");
+            case 2:
+                return new Parameters(arguments[0], arguments[1]);
+            default:
+                throw new ApplicationError(ErrorCode.TOO_MANY_ARGUMENTS);
         }
 
-        if (arguments.length > 1) {
-            throw new ApplicationError(ErrorCode.TOO_MANY_ARGUMENTS);
-        }
-
-        return new Parameters(arguments[0]);
     }
 
 }

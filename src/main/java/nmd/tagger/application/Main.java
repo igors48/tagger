@@ -8,7 +8,6 @@ import nmd.tagger.operations.Mp3OperationsFactory;
 import nmd.tagger.operations.mp3agic.Mp3agicOperationsFactory;
 import nmd.tagger.tracks.Track;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class Main implements Runnable {
     public void run() {
 
         try {
-            ScanForMp3Files scanForMp3Files = commandFactory.scanForMp3Files(parameters.getPath());
+            ScanForMp3Files scanForMp3Files = commandFactory.scanForMp3Files(parameters.getMusicPath());
             scanForMp3Files.execute();
 
             if (state.getStep().equals(Step.ERROR)) {
