@@ -14,6 +14,7 @@ import nmd.tagger.operations.path.PathOperations;
 public class Application {
 
     public static void main(String[] args) throws InterruptedException {
+
         try {
             final Parameters parameters = CommandLineParser.parse(args);
 
