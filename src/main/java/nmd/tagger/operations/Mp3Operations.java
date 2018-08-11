@@ -34,4 +34,6 @@ public interface Mp3Operations {
 
     void store(String fileName) throws IOException, NotSupportedException;
 
+    void replaceFrontCover() throws IOException;
+
 }
