@@ -23,7 +23,7 @@ public class ScanForMp3Files implements Command {
     public void execute() {
         try {
             state.scan();
-            final List<Path> files = operations.scan(path);
+            final List<Path> files = operations.scanForMp3(path);
             state.scanCompleted(files);
         } catch (IOException e) {
             state.scanError(e);

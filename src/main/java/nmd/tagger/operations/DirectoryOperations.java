@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface DirectoryOperations {
 
-    List<Path> scan(String path) throws IOException;
+    List<Path> scanForMp3(String path) throws IOException;
+
+    List<Path> scanForJpg(String path) throws IOException;
 
 }

@@ -22,7 +22,7 @@ public class ScanForMp3FilesTest {
     public void happyFlow() throws IOException {
         DirectoryOperations directoryOperations = Mockito.mock(DirectoryOperations.class);
         List<Path> list = createPathList();
-        Mockito.when(directoryOperations.scan(PATH)).thenReturn(list);
+        Mockito.when(directoryOperations.scanForMp3(PATH)).thenReturn(list);
 
         State state = Mockito.mock(State.class);
 
@@ -30,7 +30,7 @@ public class ScanForMp3FilesTest {
         command.execute();
 
         Mockito.verify(state).scan();
-        Mockito.verify(directoryOperations).scan(PATH);
+        Mockito.verify(directoryOperations).scanForMp3(PATH);
         Mockito.verify(state).scanCompleted(list);
     }
 
@@ -39,7 +39,7 @@ public class ScanForMp3FilesTest {
         DirectoryOperations directoryOperations = Mockito.mock(DirectoryOperations.class);
         List<Path> list = createPathList();
         final IOException exception = new IOException();
-        Mockito.when(directoryOperations.scan(PATH)).thenThrow(exception);
+        Mockito.when(directoryOperations.scanForMp3(PATH)).thenThrow(exception);
 
         State state = Mockito.mock(State.class);
 
@@ -47,7 +47,7 @@ public class ScanForMp3FilesTest {
         command.execute();
 
         Mockito.verify(state).scan();
-        Mockito.verify(directoryOperations).scan(PATH);
+        Mockito.verify(directoryOperations).scanForMp3(PATH);
         Mockito.verify(state).scanError(exception);
     }
 

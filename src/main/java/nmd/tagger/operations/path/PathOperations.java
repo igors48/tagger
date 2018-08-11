@@ -12,13 +12,20 @@ import java.util.stream.Collectors;
 public class PathOperations implements DirectoryOperations {
 
     private static final String MP3_EXTENSION = ".mp3";
+    private static final String JPG_EXTENSION = ".jpg";
 
     @Override
-    public List<Path> scan(String path) throws IOException {
+    public List<Path> scanForMp3(String path) throws IOException {
         return Files.walk(Paths.get(path))
                 .filter(p -> p.toString().toLowerCase().endsWith(MP3_EXTENSION))
                 .collect(Collectors.toList());
+    }
 
+    @Override
+    public List<Path> scanForJpg(String path) throws IOException {
+        return Files.walk(Paths.get(path))
+                .filter(p -> p.toString().toLowerCase().endsWith(JPG_EXTENSION))
+                .collect(Collectors.toList());
     }
 
 }
