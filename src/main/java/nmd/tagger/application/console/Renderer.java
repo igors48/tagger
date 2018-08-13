@@ -14,7 +14,7 @@ public class Renderer {
         final int filesCount = state.getFilesCount();
 
         switch (step) {
-            case SCAN:
+            case SCAN_MP3:
                 System.out.println(step);
                 return true;
             case READ:

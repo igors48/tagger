@@ -15,7 +15,7 @@ public class State {
     private List<Path> files;
 
     public State() {
-        step = Step.SCAN;
+        step = Step.SCAN_MP3;
         filesCount = 0;
         count = 0;
     }
@@ -29,11 +29,11 @@ public class State {
     }
 
     public synchronized void scan() {
-        step = Step.SCAN;
+        step = Step.SCAN_MP3;
     }
 
     public synchronized void scanCompleted(List<Path> files) {
-        step = Step.SCAN;
+        step = Step.SCAN_MP3;
         this.files = files;
         filesCount = files.size();
     }
@@ -63,5 +63,5 @@ public class State {
     public List<Path> getFiles() {
         return files;
     }
-    
+
 }
