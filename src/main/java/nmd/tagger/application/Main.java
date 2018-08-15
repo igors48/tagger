@@ -2,6 +2,9 @@ package nmd.tagger.application;
 
 import nmd.tagger.application.command.CommandFactory;
 import nmd.tagger.application.state.State;
+import nmd.tagger.application.state.Step;
+import nmd.tagger.tracks.Track;
+import nmd.tagger.tracks.TrackInfo;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,6 +13,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
+
+import static nmd.tagger.application.Tools.parse;
 
 /**
  * Created by igu on 16-Mar-18.
@@ -26,23 +31,53 @@ public class Main implements Runnable {
         this.state = state;
     }
 
-    public static List<Path> scanForMp3(String path) {
+    private List<Path> scanForMp3(String path) {
         try {
             return Files.walk(Paths.get(path))
-                    .filter(p -> p.toString().toLowerCase().endsWith(".mp3"))
+                    .filter(p -> {
+                        final boolean acceptable = p.toString().toLowerCase().endsWith(".mp3");
+
+                        if (acceptable) {
+                            this.state.incFilesCount();
+                        }
+
+                        return acceptable;
+                    })
                     .collect(Collectors.toList());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+    private Track read(Path path) {
+        final String fileName = path.getFileName().toString();
+        final TrackInfo trackInfo = parse(fileName);
+        this.state.incCount();
+        // add 'not accessible' for error reporting
+        return new Track(path, trackInfo);
+    }
+
     @Override
     public void run() {
-        final String musicPath = parameters.getMusicPath();
-        final CompletableFuture<List<Path>> mp3Files = CompletableFuture.supplyAsync(() -> scanForMp3(musicPath));
         try {
-            final List<Path> files = mp3Files.get();
-            System.out.println(files);
+            final String musicPath = parameters.getMusicPath();
+            final CompletableFuture<List<Path>> mp3Paths = CompletableFuture.supplyAsync(() -> scanForMp3(musicPath));
+            final List<Path> paths = mp3Paths.get();
+
+            state.setStep(Step.READ_MP3);
+
+            final CompletableFuture[] tracks = new CompletableFuture[paths.size()];
+            int index = 0;
+
+            for (final Path path : paths) {
+                final CompletableFuture<Track> track = CompletableFuture.supplyAsync(() -> read(path));
+                tracks[index++] = track;
+            }
+
+            CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(tracks);
+            combinedFuture.get();
+
+            state.setStep(Step.END);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

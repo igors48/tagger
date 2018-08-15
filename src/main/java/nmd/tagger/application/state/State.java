@@ -20,6 +20,14 @@ public class State {
         count = 0;
     }
 
+    public synchronized void incFilesCount() {
+        this.filesCount++;
+    }
+
+    public synchronized void incCount() {
+        this.count++;
+    }
+
     public synchronized Step getStep() {
         return step;
     }
@@ -39,7 +47,7 @@ public class State {
     }
 
     public synchronized void read(int current) {
-        step = Step.READ;
+        step = Step.READ_MP3;
         count = current;
     }
 

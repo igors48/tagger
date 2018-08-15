@@ -19,7 +19,7 @@ public class Console implements Runnable {
         try {
 
             do {
-                Thread.sleep(10);
+                Thread.sleep(5);
             } while (Renderer.render(state));
 
         } catch (InterruptedException e) {

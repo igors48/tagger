@@ -16,8 +16,9 @@ public class Renderer {
         switch (step) {
             case SCAN_MP3:
                 System.out.println(step);
+                System.out.println(filesCount);
                 return true;
-            case READ:
+            case READ_MP3:
                 System.out.println(step + " " + current + " of " + filesCount);
                 return true;
             case VERIFY:
